@@ -16,7 +16,7 @@ struct TupleTest(i32, i64, usize);
 struct MakeItClear;
 
 fn main() {
-    debug_with_macro_dbg()
+    call_method_from_rectangle()
 }
 
 pub fn first_structure(){
@@ -116,3 +116,22 @@ pub fn create_user(username:String,password:String)->User{
 }
 
 
+//method learning from here
+
+
+impl Rectangle{
+    fn aire(&self)->u64{
+        self.longueur*self.largeur
+    }
+}
+
+pub fn call_method_from_rectangle(){
+
+    let rect = Rectangle{
+        longueur: 30,
+        largeur: 25,
+    };
+
+    println!("L'aire du rectangle est de {}", rect.aire())
+
+}

@@ -15,9 +15,6 @@ struct TupleTest(i32, i64, usize);
 //undefined type struct definition
 struct MakeItClear;
 
-fn main() {
-    call_method_from_rectangle()
-}
 
 pub fn first_structure(){
 
@@ -67,13 +64,31 @@ pub fn first_structure(){
 #[derive(Debug)]
 struct Rectangle {
     longueur:u64,
-    largeur:u64
+    hauteur:u64
+}
+
+
+impl Rectangle{
+    fn aire(&self)->u64{
+        self.longueur*self.hauteur
+    }
+
+    fn can_contain(&self, other: &Rectangle)->bool{
+        self.longueur> other.longueur && self.hauteur>other.hauteur
+    }
+
+    fn square(cote:u64)->Rectangle{
+        Rectangle{
+            longueur: cote,
+            hauteur: cote,
+        }
+    }
 }
 
 pub fn debug_with_macro_dbg() {
     let scale = 2;
     let rect1 = Rectangle {
-        largeur: dbg!(30 * scale),
+        hauteur: dbg!(30 * scale),
         longueur: 50,
     };
 
@@ -83,7 +98,7 @@ pub fn debug_with_macro_dbg() {
 pub fn launch_calculate_app(){
     let rect = Rectangle{
         longueur: 30,
-        largeur: 50,
+        hauteur: 50,
     };
 
     println!("L'aire de votre rectangle est de {}",
@@ -93,7 +108,7 @@ pub fn launch_calculate_app(){
 pub fn debug_calculate_app(){
     let rect = Rectangle{
         longueur: 30,
-        largeur: 50,
+        hauteur: 50,
     };
 
     println!("L'aire de votre rectangle est de {:#?}",rect)
@@ -101,7 +116,7 @@ pub fn debug_calculate_app(){
 
 
 pub fn calculate_rectangle_area(rectangle: &Rectangle)->u64{
-    rectangle.longueur * rectangle.largeur
+    rectangle.longueur * rectangle.hauteur
 }
 
 
@@ -119,19 +134,41 @@ pub fn create_user(username:String,password:String)->User{
 //method learning from here
 
 
-impl Rectangle{
-    fn aire(&self)->u64{
-        self.longueur*self.largeur
-    }
-}
-
 pub fn call_method_from_rectangle(){
 
     let rect = Rectangle{
         longueur: 30,
-        largeur: 25,
+        hauteur: 25,
     };
 
     println!("L'aire du rectangle est de {}", rect.aire())
 
+}
+
+pub fn compare_instances() {
+    let rect1 = Rectangle {
+        longueur: 30,
+        hauteur: 50
+    };
+    let rect2 = Rectangle {
+        longueur: 10,
+        hauteur: 40
+    };
+    let rect3 = Rectangle {
+        longueur: 60,
+        hauteur: 45
+    };
+
+    println!("rect1 peut-il contenir rect2 ? {}", rect1.can_contain(&rect2));
+    println!("rect1 peut-il contenir rect3 ? {}", rect1.can_contain(&rect3));
+}
+
+pub fn create_square(){
+    let square = Rectangle::square(54);
+    println!("votre carré a une longueur de :{} par {}",square.hauteur,square.longueur)
+}
+
+
+fn main() {
+    create_square();
 }
